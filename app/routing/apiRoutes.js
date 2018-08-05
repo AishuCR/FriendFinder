@@ -1,18 +1,35 @@
 //Routes API
+var friendsData = require('../data/friends.js');
 
+module.exports = function(app){
 app.get("/api/friends", function(req, res) {
     res.json(friendsData);
   });
+
   app.post("/api/friends", function(req, res) {
-    // Note the code here. Our "server" will respond to requests and let users know if they have a table or not.
-    // It will do this by sending out the value "true" have a table
-    // req.body is available since we're using the body-parser middleware
-    if (friendsData.length < 5) {
-      friendsData.push(req.body);
-      res.json(true);
+    friendsData.push(userInput);
+    var userInput = req.body;
+    var userResponse = userInput.scores;
+    var matchName = "";
+    var matchImage = "";
+    var totaldifference = 100;
+
+    for(var i = 0; i < friends.length; i++){
+var diff = 0;
+for(var j= 0; j<userResponse.length; j++){
+  diff += Math.abs(friends[i].scores[j] - userResponse[j]);
+}
+if(diff < totaldifference){
+  totaldifference = diff;
+  matchName = friends[i].name;
+  matchImage = friends[i].Photo;
+}
     }
-    else {
-      friendsData.push(req.body);
-      res.json(false);
-    }
-  });
+    friendsData.push(userInput);
+    res.json({
+      status: "OK",
+      matchName: "matchName",
+      matchImage: "matchImage"
+    })
+    });
+  }
