@@ -1,8 +1,8 @@
 //input values
-var friendsData = [
+var friends = [
     {
         "name": "Aishu",
-        "Photo": "https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/064/1bd/3435aa3.jpg",
+        "photo": "https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/064/1bd/3435aa3.jpg",
         "scores": [
             5,
             4,
@@ -17,4 +17,4 @@ var friendsData = [
         ]
     }
 ];
-module.exports = friendsData;
+module.exports = friends;

@@ -29,12 +29,12 @@
         </h3>
             <form>
             <div class="form-group">
-                <label for="exampleInputEmail1">Name (required)</label>
+                <label for="name">Name (required)</label>
                 <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Name">
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">Link to Photo Image (Required)</label>
-                <input type="text" class="form-control" id="Photo" aria-describedby="emailHelp" placeholder="Photo link">
+                <label for="image">Link to Photo Image (Required)</label>
+                <input type="text" class="form-control" id="photo" aria-describedby="emailHelp" placeholder="Photo link">
             </div>
             <hr>
             <h3>Question 1</h3>
@@ -213,7 +213,7 @@
             if(validateForm() == true){
                 var newfriend = {
                     name: $('#name').val().trim(),
-                    Photo: $('#photo').val().trim(),
+                    photo: $('#photo').val().trim(),
                     scores:[
                     $('#q1').val(),
                     $('#q2').val(),
@@ -228,10 +228,10 @@
                     ]
                 }
                 var currentURL = window.location.origin;
-                $.post(currentURL + "/api/friends",newFriend, function(data){
+                $.post(currentURL + "/api/friends",newfriend, function(data){
                     $("#matchName").text(data.name);
-                    $("#matchImage").attr("src", data.Photo);
-                    $("#modal").modal();
+                    $("#matchImage").attr("src", data.photo);
+                    $("#modal").modal("toggle");
                 })
                 
                 $('#name').val("");
@@ -250,6 +250,7 @@
             else{
                 alert("Please fill out ALL fields before submitting survey!")
             }
+            return false;
         });
     });
     </script>
