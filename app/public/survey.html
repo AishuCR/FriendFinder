@@ -16,6 +16,9 @@
         crossorigin="anonymous"></script>
         <!--font awesome-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!--css link-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
 </head>
 
 <body>
@@ -184,8 +187,8 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</div>
-				</div>
-			</div>
+                </div>
+            </div>
         </div>
         <div class="container">
 			<a href="/api/friends">Friends API</a>
@@ -194,23 +197,32 @@
         </div>
         
     <script type="text/javascript">
-    $(document).ready(function(){
+     var config = {
+      '.chosen-select'           : {},
+      '.chosen-select-deselect'  : {allow_single_deselect:true},
+      '.chosen-select-no-single' : {disable_search_threshold:10},
+      '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+      '.chosen-select-width'     : {width:"95%"}
+    }
+    for (var selector in config) {
+      $(selector).chosen(config[selector]);
+    }
         $("#submitBtn").on("click", function(){
-            function validateForm(){
-                var isValid = true;
-                $('.validate').each(function(){
-                    if($(this).val() === ''){
-                        isValid = false;
-                    }
-                });
-                $('.browser-default').each(function(){
-                    if($(this).val() === ""){
-                        isValid = false;
-                    }
-                });
-                return isValid;
-            }
-            if(validateForm() == true){
+            function validateForm() {
+		  var isValid = true;
+		  $('.form-control').each(function() {
+		    if ( $(this).val() === '' )
+		        isValid = false;
+		  });
+		  $('.chosen-select').each(function() {
+		  	if( $(this).val() === "")
+		  		isValid = false
+		  })
+		  return isValid;
+		}
+		// If all required fields are filled
+		if (validateForm() == true)
+		{
                 var newfriend = {
                     name: $('#name').val().trim(),
                     photo: $('#photo').val().trim(),
@@ -231,28 +243,14 @@
                 $.post(currentURL + "/api/friends",newfriend, function(data){
                     $("#matchName").text(data.name);
                     $("#matchImage").attr("src", data.photo);
-                    $("#modal").modal("toggle");
-                })
-                
-                $('#name').val("");
-                $("#photo").val("")
-                $('#q1').val(""),
-                    $('#q2').val(""),
-                    $('#q3').val(""),
-                    $('#q4').val(""),
-                    $('#q5').val(""),
-                    $('#q6').val(""),
-                    $('#q7').val(""),
-                    $('#q8').val(""),
-                    $('#q9').val(""),
-                    $('#q10').val("")
+                    $("#modal").modal("show");
+                });
             }
             else{
-                alert("Please fill out ALL fields before submitting survey!")
+                alert("Please fill out all fields before submitting!");
             }
             return false;
         });
-    });
     </script>
 </body>
 
